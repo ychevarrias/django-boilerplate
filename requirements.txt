@@ -1,0 +1,15 @@
+Django
+django-environ
+djangorestframework
+Pillow
+ipython
+psycopg2-binary
+requests
+django-redis
+django-debug-toolbar
+pycryptodome
+celery
+django-celery-beat
+django-celery-results
+django-filter
+django-cacheops
