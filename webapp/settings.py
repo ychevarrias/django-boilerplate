@@ -266,7 +266,7 @@ INTERNAL_IPS = (
 )
 
 CACHES = {
-    'default': env.cache('REDIS_URL')
+    'default': env.cache('CACHE_URL')
 }
 
 CSRF_TRUSTED_ORIGINS = ALLOWED_HOSTS
@@ -275,7 +275,7 @@ CACHEOPS = {
     # 'auth.*': {'ops': 'get', 'timeout': 60*15},
 }
 
-CELERY_BROKER_URL = env('REDIS_URL')
+CELERY_BROKER_URL = env('CELERY_REDIS_URL')
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'

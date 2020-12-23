@@ -6,6 +6,7 @@ ipython
 psycopg2-binary
 requests
 django-redis
+django-extensions
 django-debug-toolbar
 pycryptodome
 celery
