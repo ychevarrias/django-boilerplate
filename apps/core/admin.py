@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import InfoSite
 
-# Register your models here.
+
+@admin.register(InfoSite)
+class InfoSiteAdmin(admin.ModelAdmin):
+    model = InfoSite

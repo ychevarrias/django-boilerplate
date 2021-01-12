@@ -82,6 +82,8 @@ CACHEOPS_REDIS = env('CACHEOPS_REDIS')
 # Application definition
 
 INSTALLED_APPS = [
+    'grappelli',
+    'filebrowser',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -94,6 +96,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_extensions',
     'django_filters',
+    'ckeditor',
 ]
 if CACHEOPS_REDIS:
     INSTALLED_APPS += [
@@ -198,6 +201,10 @@ STATIC_ROOT = env('STATIC_ROOT')
 MEDIA_URL = env('MEDIA_URL')
 MEDIA_ROOT = env('MEDIA_ROOT')
 
+if DEBUG:
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+
 STATICFILES_DIRS = [
     os.path.join(SITE_ROOT, 'static'),
 ]
@@ -244,11 +251,12 @@ LOGGING = {
 }
 
 REST_FRAMEWORK = {
-    'EXCEPTION_HANDLER': 'apps.core.rest_utils.rest_exception_handler',
+    'EXCEPTION_HANDLER': 'apps.core.utils_drf.rest_handler.exception_handler',
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.TokenAuthentication',
@@ -257,7 +265,7 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 20,
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
-        'apps.core.mixinx_renderers.OnlyRawBrowsableAPIRenderer',
+        'apps.core.utils_drf.rest_render.ReadBrowsableAPIRenderer',
     ]
 }
 
@@ -287,3 +295,4 @@ CELERY_TRACK_STARTED = True
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 2000
 BUILD_UID = uuid4().hex
+

@@ -1,0 +1,4 @@
+
+
+class SysException(BaseException):
+    pass
