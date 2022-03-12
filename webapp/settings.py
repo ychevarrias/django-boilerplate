@@ -52,7 +52,7 @@ environ.Env.read_env(os.path.join(SITE_ROOT, '.env'))  # reading .env file
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY')
-
+AUTH_USER_MODEL = "usuario.User"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
@@ -108,7 +108,8 @@ if DEBUG:
     ]
 
 INSTALLED_APPS += [
-    'apps.core'
+    'apps.usuario',
+    'apps.core',
 ]
 
 MIDDLEWARE = [
