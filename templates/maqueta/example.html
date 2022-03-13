@@ -1,4 +1,25 @@
 {% extends 'maqueta/commons/base.html' %}
+{% block css_adicional %}
+  <style>
+    .product {
+        border: 1px solid skyblue;
+        padding: 1rem;
+    }
+    .product-list {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+    }
+  </style>
+{% endblock %}
 {% block content %}
 <a href="/">Go to Index page</a>
+<div class="product-list">
+  {% for producto in 16|get_products_dummy %}
+  <div class="product">
+    <img src="{{ producto.imagen }}" alt="{{ producto.nombre }}" width="50px">
+    <p>{{ producto.nombre }} <small>Calificación: {{ producto.stars }}</small></p>
+    <p>Precio: <strong>{{ producto.precio }}</strong></p>
+  </div>
+  {% endfor %}
+</div>
 {% endblock %}
