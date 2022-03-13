@@ -16,14 +16,14 @@ Including another URLconf
 import debug_toolbar
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, re_path, include
 from django.conf import settings
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
 from filebrowser.sites import site
-
+from apps.core.utils.development import TemplateRender
 
 urlpatterns = [
     path('admin/filebrowser/', site.urls),
@@ -37,8 +37,13 @@ if settings.URL_PREFIX:
     urlpatterns = [path('%s/' % settings.URL_PREFIX, include(urlpatterns))]
 
 if settings.DEBUG:
+    dev_patterns = []
     urlpatterns += [
         path('__debug__/', include(debug_toolbar.urls)),
+        re_path(r'(?P<path>.*)\.html$', TemplateRender.as_view()),
     ]
+    if settings.FRONTEND_MODE:
+        urlpatterns += [path(r'', TemplateRender.as_view())]
+
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

@@ -26,6 +26,7 @@ SITE_ROOT = root()
 
 env = environ.Env(
     DEBUG=(bool, False),
+    FRONTEND_MODE=(bool, False),
     SECRET_KEY=(str, 'd9%@5%@0jv)40w*_z@ysty7te$hgkxcba8#)t4+_a24o8+h3ju'),
     STATIC_URL=(str, '/static/'),
     STATIC_ROOT=(str, '/tmp/static/'),
@@ -55,6 +56,7 @@ SECRET_KEY = env('SECRET_KEY')
 AUTH_USER_MODEL = "usuario.User"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
+FRONTEND_MODE = env('FRONTEND_MODE')
 
 
 ALLOWED_HOSTS = env('ALLOWED_HOSTS')
