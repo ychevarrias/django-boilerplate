@@ -1,0 +1,60 @@
+<aside class="h-full min-h-screen bg-sky-900 xl:block w-64 absolute xl:relative z-50 -ml-64 xl:m-0 transition-all border-r overflow-auto text-white sidebar">
+  <ul class="grid-cols-1 divide-y divide-solid root">
+    <li class="xl:hidden border-sky-700 grid grid-columns">
+      <a href="" id="close-sidebar-btn" class="w-full p-3 bg-indigo-800 text-right">
+        <i class="fa-solid fa-angles-left pr-1"></i>
+        Cerrar
+      </a>
+    </li>
+    {% for loop in looper_10 %}
+    <li class="border-sky-700 grid grid-columns">
+      <a href="#" class="w-full p-3 pointer hover:bg-sky-800">
+        <i class="fa-regular fa-bookmark pr-1"></i>
+        Menu {{ loop }}
+      </a>
+      <ul class="grid-cols-1 transition-all h-0 overflow-hidden divide-y divide-solid border-sky-700">
+        <li class="grid grid-columns border-sky-700">
+          <a href="#" class="w-full p-3 hover:bg-sky-800">
+            <i class="fa-solid fa-arrow-up-right-from-square pr-1"></i>
+            Link Lvl 1
+          </a>
+        </li>
+        <li class="grid grid-columns border-sky-700">
+          <a href="#" class="w-full p-3 hover:bg-sky-800">
+            <i class="fa-solid fa-square-caret-down pr-1"></i>
+            Sub Menu Lvl 1
+          </a>
+          <ul class="grid-cols-1 transition-all h-0 overflow-hidden divide-y divide-solid border-sky-700">
+            <li class="grid grid-columns border-sky-700">
+              <a href="#" class="w-full p-3 hover:bg-sky-800">
+                <i class="fa-solid fa-arrow-up-right-from-square pr-1"></i>
+                Link Lvl 2
+              </a>
+            </li>
+            <li class="grid grid-columns border-sky-700">
+              <a href="#" class="w-full p-3 hover:bg-sky-800">
+                <i class="fa-solid fa-square-caret-down pr-1"></i>
+                Sub Menu Lvl 2
+              </a>
+              <ul class="grid-cols-1 transition-all h-0 overflow-hidden divide-y divide-solid border-sky-700">
+                <li class="grid grid-columns border-sky-700">
+                  <a href="#" class="w-full p-3 hover:bg-sky-800">
+                    <i class="fa-solid fa-arrow-up-right-from-square pr-1"></i>
+                    Link 1  Lvl 3
+                  </a>
+                </li>
+                <li class="grid grid-columns border-sky-700">
+                  <a href="#" class="w-full p-3 hover:bg-sky-800">
+                    <i class="fa-solid fa-arrow-up-right-from-square pr-1"></i>
+                    Link 2 Lvl 3
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    {% endfor %}
+  </ul>
+</aside>

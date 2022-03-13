@@ -1,4 +1,8 @@
 {% extends 'maqueta/commons/base.html' %}
+{% load static %}
 {% block content %}
 <a href="example.html" style="display: block">Example product list</a>
+{% endblock %}
+{% block js_adicional %}
+  <script src="{% static 'js/main.js' %}"></script>
 {% endblock %}

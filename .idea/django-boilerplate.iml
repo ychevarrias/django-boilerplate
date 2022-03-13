@@ -17,7 +17,6 @@
       <sourceFolder url="file://$MODULE_DIR$/static" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/templates" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.venv" />
-      <excludeFolder url="file://$MODULE_DIR$/static" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.9 (django-boilerplate)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

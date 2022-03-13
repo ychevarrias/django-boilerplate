@@ -1,25 +1,27 @@
 {% extends 'maqueta/commons/base.html' %}
+{% load static %}
 {% block css_adicional %}
-  <style>
-    .product {
-        border: 1px solid skyblue;
-        padding: 1rem;
-    }
-    .product-list {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-    }
-  </style>
 {% endblock %}
 {% block content %}
-<a href="/">Go to Index page</a>
-<div class="product-list">
+<div class="flex my-4">
+  <a class="p-4 rounded bg-indigo-500 w-auto text-white" href="/">
+    <i class="fa-solid fa-caret-left pr-1"></i>
+    Go to Index page
+  </a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
   {% for producto in 16|get_products_dummy %}
-  <div class="product">
-    <img src="{{ producto.imagen }}" alt="{{ producto.nombre }}" width="50px">
-    <p>{{ producto.nombre }} <small>Calificación: {{ producto.stars }}</small></p>
-    <p>Precio: <strong>{{ producto.precio }}</strong></p>
+  <div class="grid grid-flow-col auto-cols-auto1fr border shadow-lg h-32 rounded-xl overflow-hidden">
+    <img class="w-32 h-32 object-cover" src="{{ producto.imagen }}" alt="{{ producto.nombre }}">
+    <div class="p-4 relative">
+      <p>{{ producto.nombre }}
+        <small class="block"><i class="fa-solid fa-star text-yellow-300"></i> {{ producto.stars }}</small></p>
+      <p class="absolute bottom-0 right-0 p-1 pr-2">USD <strong>{{ producto.precio }}</strong></p>
+    </div>
   </div>
   {% endfor %}
 </div>
+{% endblock %}
+{% block js_adicional %}
+  <script src="{% static 'js/main.js' %}?v=222"></script>
 {% endblock %}
