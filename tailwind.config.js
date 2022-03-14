@@ -1,7 +1,23 @@
 module.exports = {
-  content: [],
+  content: [
+      "./templates/**/*.{html, js}",
+      "./static/**/*.{html, js}",
+  ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        clifford: '#da373d',
+      },
+      gridAutoColumns: {
+        'auto1fr': 'auto 1fr',
+      }
+    },
   },
-  plugins: [],
+  plugins: [
+    'postcss-import',
+    'tailwindcss/nesting',
+    'tailwindcss/forms',
+    'tailwindcss',
+    'autoprefixer',
+  ],
 }

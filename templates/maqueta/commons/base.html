@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="es">
 <head>
@@ -5,49 +6,15 @@
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>{% block title %}{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
   <script src="https://kit.fontawesome.com/d731a653c2.js"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            clifford: '#da373d',
-          },
-          gridAutoColumns: {
-            'auto1fr': 'auto 1fr',
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-.sidebar > ul > li > a {
-	padding-left: 0.75rem;
-}
-
-.sidebar > ul > li > a + ul > li > a {
-	padding-left: 1.5rem;
-}
-
-.sidebar > ul > li > a + ul > li > a + ul > li > a {
-	padding-left: 2.25rem;
-}
-
-.sidebar > ul > li > a + ul > li > a + ul > li > a + ul > li > a {
-	padding-left: 3rem;
-}
-
-.sidebar > ul > li > a + ul > li > a + ul > li > a + ul > li > a + ul > li > a {
-	padding-left: 3.75rem;
-}
-  </style>
   {% block css_adicional %}
   {% endblock %}
   {% block js_prebody %}
   {% endblock %}
 </head>
-<body class="relative {% block body_classes %}{% endblock %}">
+<body class="relative [--scroll-mt:9.875rem] lg:[--scroll-mt:6.3125rem] {% block body_classes %}{% endblock %}">
+<div class="hidden absolute h-full w-full overlay z-20 bg-slate-900/50"></div>
 <div class="grid grid-flow-col auto-cols-auto1fr">
   {% include 'maqueta/commons/sidebar.html' %}
   <div class="m-0 grid grid-flow-rows auto-rows-min">
