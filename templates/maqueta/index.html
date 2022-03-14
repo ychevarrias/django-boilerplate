@@ -1,7 +1,11 @@
 {% extends 'maqueta/commons/base.html' %}
+{% block title %}Tailwind CSS test{% endblock %}
 {% load static %}
 {% block content %}
-<a href="example.html" style="display: block">Example product list</a>
+<a href="example.html" class="btn link">
+  <i class="fa-solid fa-arrow-up-right-from-square"></i>
+  Example product list
+</a>
 {% endblock %}
 {% block js_adicional %}
 <script src="{% static 'js/main.js' %}"></script>
