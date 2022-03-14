@@ -32,3 +32,6 @@
 .sidebar li {
 	@apply border-sky-800
 }
+html, body {
+	@apply min-h-screen
+}

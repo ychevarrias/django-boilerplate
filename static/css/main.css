@@ -492,16 +492,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   left: 16rem;
 }
 
-.z-50 {
-  z-index: 50;
-}
-
 .z-20 {
   z-index: 20;
 }
 
-.z-10 {
-  z-index: 10;
+.z-50 {
+  z-index: 50;
 }
 
 .m-0 {
@@ -536,12 +532,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 8rem;
 }
 
-.h-auto {
-  height: auto;
-}
-
 .h-full {
   height: 100%;
+}
+
+.h-auto {
+  height: auto;
 }
 
 .h-0 {
@@ -599,10 +595,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-style: solid;
 }
 
-.overflow-auto {
-  overflow: auto;
-}
-
 .overflow-hidden {
   overflow: hidden;
 }
@@ -623,10 +615,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-width: 2px;
 }
 
-.border-r {
-  border-right-width: 1px;
-}
-
 .border-sky-600 {
   --tw-border-opacity: 1;
   border-color: rgb(2 132 199 / var(--tw-border-opacity));
@@ -635,6 +623,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .bg-indigo-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(99 102 241 / var(--tw-bg-opacity));
+}
+
+.bg-slate-900\/50 {
+  background-color: rgb(15 23 42 / 0.5);
 }
 
 .bg-sky-100 {
@@ -652,17 +644,9 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(55 48 163 / var(--tw-bg-opacity));
 }
 
-.bg-slate-900 {
+.bg-sky-600 {
   --tw-bg-opacity: 1;
-  background-color: rgb(15 23 42 / var(--tw-bg-opacity));
-}
-
-.bg-slate-900\/25 {
-  background-color: rgb(15 23 42 / 0.25);
-}
-
-.bg-slate-900\/50 {
-  background-color: rgb(15 23 42 / 0.5);
+  background-color: rgb(2 132 199 / var(--tw-bg-opacity));
 }
 
 .object-cover {
@@ -702,6 +686,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-bottom: 0.25rem;
 }
 
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
 .pr-1 {
   padding-right: 0.25rem;
 }
@@ -712,6 +701,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .pb-8 {
   padding-bottom: 2rem;
+}
+
+.pt-2 {
+  padding-top: 0.5rem;
 }
 
 .text-right {
@@ -790,6 +783,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-color: rgb(7 89 133 / var(--tw-border-opacity));
 }
 
+html, body {
+  min-height: 100vh;
+}
+
 .hover\:bg-sky-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(3 105 161 / var(--tw-bg-opacity));
@@ -822,10 +819,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
   .xl\:block {
     display: block;
-  }
-
-  .xl\:hidden {
-    display: none;
   }
 
   .xl\:px-8 {
