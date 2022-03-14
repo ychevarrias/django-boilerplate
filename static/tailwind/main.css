@@ -32,6 +32,24 @@
 .sidebar li {
 	@apply border-sky-800
 }
+a.btn{
+	cursor: pointer;
+}
+.btn {
+	@apply p-2 px-4 rounded text-white
+}
+.btn i {
+	@apply pr-1
+}
+.btn.link {
+	@apply bg-indigo-500
+}
+.btn.success {
+	@apply bg-green-500
+}
+.btn.action {
+	@apply bg-sky-500
+}
 html, body {
 	@apply min-h-screen
 }
