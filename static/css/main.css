@@ -557,16 +557,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 3rem;
 }
 
-.h-0 {
-  height: 0px;
-}
-
 .h-auto {
   height: auto;
 }
 
-.max-h-screen {
-  max-height: 100vh;
+.h-0 {
+  height: 0px;
 }
 
 .min-h-screen {
@@ -727,12 +723,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-top: 0.5rem;
 }
 
-.pr-1 {
-  padding-right: 0.25rem;
-}
-
 .pt-4 {
   padding-top: 1rem;
+}
+
+.pr-1 {
+  padding-right: 0.25rem;
 }
 
 .text-center {
@@ -815,6 +811,24 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(3 105 161 / var(--tw-bg-opacity));
 }
 
+.sidebar a.link {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  padding: 0.75rem;
+}
+
+.sidebar a.link:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(3 105 161 / var(--tw-bg-opacity));
+}
+
+.sidebar a.link i {
+  padding-right: 0.5rem;
+}
+
 .sidebar a.opened {
   --tw-bg-opacity: 1;
   background-color: rgb(7 89 133 / var(--tw-bg-opacity));
@@ -872,11 +886,6 @@ html, body {
   min-height: 100vh;
 }
 
-.hover\:bg-sky-700:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(3 105 161 / var(--tw-bg-opacity));
-}
-
 @media (min-width: 768px) {
   .md\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -908,10 +917,6 @@ html, body {
 
   .xl\:h-full {
     height: 100%;
-  }
-
-  .xl\:max-h-screen {
-    max-height: 100vh;
   }
 
   .xl\:px-8 {

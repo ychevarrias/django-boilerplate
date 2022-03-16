@@ -13,7 +13,7 @@
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
   {% for producto in 16|get_products_dummy %}
   <div class="grid grid-flow-col auto-cols-auto1fr border shadow-lg h-32 rounded-xl">
-    <img class="w-32 h-32 object-cover rounded-l-lg" src="{{ producto.imagen }}" alt="{{ producto.nombre }}">
+    <img class="w-32 h-32 object-cover rounded-l-lg" loading="lazy" src="{{ producto.imagen }}" alt="{{ producto.nombre }}">
     <div class="p-4 relative">
       <p>{{ producto.nombre }}
         <small class="block"><i class="fa-solid fa-star text-yellow-300"></i> {{ producto.stars }}</small></p>
@@ -26,5 +26,5 @@
 </div>
 {% endblock %}
 {% block js_adicional %}
-  <script src="{% static 'js/main.js' %}?v=222"></script>
+  <script src="{% static 'js/main.js' %}?v=1"></script>
 {% endblock %}

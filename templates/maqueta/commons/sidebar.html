@@ -14,9 +14,9 @@
   <ul class="grid-cols-1 divide-y divide-solid root">
     {% for loop in looper_10 %}
     <li class="grid grid-columns">
-      <a href="#" class="w-full p-3 pointer hover:bg-sky-700">
+      <a href="#" class="link">
         <i class="fa-regular fa-bookmark pr-1"></i>
-        Menu {{ loop }}
+        Menu {{ foorloop.counter }}
       </a>
       <ul class="grid-cols-1 transition-all h-0 overflow-hidden divide-y divide-solid submenu-level-1">
         <li class="grid grid-columns">
@@ -49,12 +49,14 @@
                     Link 1  Lvl 3
                   </a>
                 </li>
+                {% if forloop.counter == 3 %}
                 <li class="grid grid-columns">
-                  <a href="" class="link">
+                  <a href="{{ request.path }}" class="link">
                     <i class="fa-solid fa-arrow-up-right-from-square pr-1"></i>
-                    Link 2 Lvl 3
+                    This page a:link
                   </a>
                 </li>
+                {% endif %}
               </ul>
             </li>
           </ul>

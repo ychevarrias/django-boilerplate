@@ -27,6 +27,14 @@
 	@apply w-full p-3 hover:bg-sky-700 grid grid-cols-2 items-center grid-cols-auto1fr
 }
 
+.sidebar a.link {
+	@apply w-full p-3 hover:bg-sky-700 grid grid-cols-2 items-center grid-cols-auto1fr
+}
+
+.sidebar a.link i {
+	@apply pr-2
+}
+
 .sidebar a.opened{
 	@apply shadow-xl bg-sky-800
 }

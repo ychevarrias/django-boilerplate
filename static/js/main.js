@@ -1,6 +1,27 @@
 let sideBar = document.querySelector("aside.sidebar");
 let btnOpenSidebar = document.querySelector("#open-sidebar-btn");
 let btnCloseSidebar = document.querySelector("#close-sidebar-btn");
+
+function activeCurrentLink(){
+  let currentLink = document.querySelector(`.sidebar a[href='${window.location.pathname}']`);
+  if(!currentLink){return null}
+  function activate(aEleme){
+    aEleme.classList.add("opened");
+    let megamenu = aEleme.closest("ul");
+    console.log("evaluando", aEleme, megamenu)
+    if(megamenu.classList.contains("root")){return null}
+    megamenu.classList.remove("h-0")
+    let parentLink = megamenu.previousElementSibling;
+    if(parentLink.classList.contains("link")){
+      parentLink.classList.add("opened");
+      activate(parentLink)
+    }
+    console.log("aEleme.click() -> ", aEleme)
+    return null;
+  }
+  activate(currentLink)
+}
+activeCurrentLink()
 sideBar.addEventListener("click", function(event){
   let target = event.target;
   if(target.nodeName !== 'A'){return null;}
