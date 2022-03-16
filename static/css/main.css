@@ -472,6 +472,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   position: static;
 }
 
+.fixed {
+  position: fixed;
+}
+
 .absolute {
   position: absolute;
 }
@@ -557,6 +561,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 0px;
 }
 
+.h-auto {
+  height: auto;
+}
+
+.max-h-screen {
+  max-height: 100vh;
+}
+
 .min-h-screen {
   min-height: 100vh;
 }
@@ -577,8 +589,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: auto;
 }
 
+.w-1\/2 {
+  width: 50%;
+}
+
 .auto-cols-auto1fr {
   grid-auto-columns: auto 1fr;
+}
+
+.grid-flow-row {
+  grid-auto-flow: row;
 }
 
 .grid-flow-col {
@@ -592,6 +612,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .grid-cols-1 {
   grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.justify-items-center {
+  justify-items: center;
 }
 
 .gap-4 {
@@ -627,6 +651,15 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .border {
   border-width: 1px;
+}
+
+.border-2 {
+  border-width: 2px;
+}
+
+.border-sky-200 {
+  --tw-border-opacity: 1;
+  border-color: rgb(186 230 253 / var(--tw-border-opacity));
 }
 
 .bg-indigo-500 {
@@ -698,6 +731,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-right: 0.25rem;
 }
 
+.pt-4 {
+  padding-top: 1rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
 .text-right {
   text-align: right;
 }
@@ -731,6 +772,13 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .\[--scroll-mt\:9\.875rem\] {
   --scroll-mt: 9.875rem;
+}
+
+.sidebar ul.root {
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: rgb(7 89 133 / var(--tw-border-opacity));
 }
 
 .sidebar ul.root a {
@@ -775,7 +823,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-.sidebar a::hover {
+.sidebar a:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(2 132 199 / var(--tw-bg-opacity));
   --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
@@ -856,6 +904,14 @@ html, body {
 
   .xl\:block {
     display: block;
+  }
+
+  .xl\:h-full {
+    height: 100%;
+  }
+
+  .xl\:max-h-screen {
+    max-height: 100vh;
   }
 
   .xl\:px-8 {

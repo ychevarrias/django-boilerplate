@@ -14,7 +14,7 @@
   {% endblock %}
 </head>
 <body class="relative [--scroll-mt:9.875rem] lg:[--scroll-mt:6.3125rem] {% block body_classes %}{% endblock %}">
-<div class="hidden absolute h-full w-full overlay z-20 bg-slate-900/50"></div>
+<div class="hidden fixed h-full w-full overlay z-20 bg-slate-900/50"></div>
 <div class="grid grid-flow-col auto-cols-auto1fr">
   {% include 'maqueta/commons/sidebar.html' %}
   <div class="m-0 grid grid-flow-rows auto-rows-min">

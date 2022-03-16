@@ -2,9 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+.sidebar ul.root {
+	@apply border-y border-sky-800
+}
+
 .sidebar ul.root a {
 	padding-left: 0.75rem;
 }
+
 .sidebar ul.submenu-level-1 a {
 	padding-left: 1.5rem;
 }
@@ -26,7 +31,7 @@
 	@apply shadow-xl bg-sky-800
 }
 
-.sidebar a::hover{
+.sidebar a:hover{
 	@apply shadow-xl bg-sky-600
 }
 .sidebar li {

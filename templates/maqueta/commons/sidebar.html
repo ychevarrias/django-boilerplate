@@ -1,7 +1,16 @@
-<aside class="h-full min-h-screen bg-sky-900 xl:block w-64 absolute xl:relative z-50 -ml-64 xl:m-0 transition-all text-white sidebar">
+<aside class="min-h-screen h-auto min-h-screen bg-sky-900 xl:block w-64 absolute xl:relative z-50 xl:h-full -ml-64 xl:m-0 transition-all text-white sidebar">
   <a href="" id="close-sidebar-btn" class=" w-auto p-3 bg-indigo-500 text-right absolute left-64 hidden">
     <i class="fa-solid fa-angles-left px-2"></i>
   </a>
+  <div class="user-info grid grid-flow-row justify-items-center p-4">
+    <div class="w-1/2">
+      <img src="https://picsum.photos/480/480" alt="user" class="rounded-full object-cover border-2 border-sky-200">
+    </div>
+    <div class="labels text-center pt-4">
+      <p>Bill Gates</p>
+      <p><small>Join: {% now 'SHORT_DATE_FORMAT' %}</small></p>
+    </div>
+  </div>
   <ul class="grid-cols-1 divide-y divide-solid root">
     {% for loop in looper_10 %}
     <li class="grid grid-columns">
