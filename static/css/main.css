@@ -733,24 +733,38 @@ Ensure the default browser behavior of the `hidden` attribute.
   --scroll-mt: 9.875rem;
 }
 
-.sidebar > ul > li > a {
+.sidebar ul.root a {
   padding-left: 0.75rem;
 }
 
-.sidebar > ul > li > a + ul > li > a {
+.sidebar ul.submenu-level-1 a {
   padding-left: 1.5rem;
 }
 
-.sidebar > ul > li > a + ul > li > a + ul > li > a {
+.sidebar ul.submenu-level-2 a {
   padding-left: 2.25rem;
 }
 
-.sidebar > ul > li > a + ul > li > a + ul > li > a + ul > li > a {
+.sidebar ul.submenu-level-3 a {
   padding-left: 3rem;
 }
 
-.sidebar > ul > li > a + ul > li > a + ul > li > a + ul > li > a + ul > li > a {
+.sidebar ul.submenu-level-4 a {
   padding-left: 3.75rem;
+}
+
+.sidebar a.link {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  padding: 0.75rem;
+}
+
+.sidebar a.link:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(3 105 161 / var(--tw-bg-opacity));
 }
 
 .sidebar a.opened {

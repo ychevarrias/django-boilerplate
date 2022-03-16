@@ -2,24 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-.sidebar > ul > li > a {
+.sidebar ul.root a {
 	padding-left: 0.75rem;
 }
-
-.sidebar > ul > li > a + ul > li > a {
+.sidebar ul.submenu-level-1 a {
 	padding-left: 1.5rem;
 }
-
-.sidebar > ul > li > a + ul > li > a + ul > li > a {
+.sidebar ul.submenu-level-2 a {
 	padding-left: 2.25rem;
 }
-
-.sidebar > ul > li > a + ul > li > a + ul > li > a + ul > li > a {
+.sidebar ul.submenu-level-3 a {
 	padding-left: 3rem;
 }
-
-.sidebar > ul > li > a + ul > li > a + ul > li > a + ul > li > a + ul > li > a {
+.sidebar ul.submenu-level-4 a {
 	padding-left: 3.75rem;
+}
+
+.sidebar a.link {
+	@apply w-full p-3 hover:bg-sky-700 grid grid-cols-2 items-center grid-cols-auto1fr
 }
 
 .sidebar a.opened{

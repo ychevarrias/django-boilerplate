@@ -10,6 +10,10 @@ module.exports = {
       },
       gridAutoColumns: {
         'auto1fr': 'auto 1fr',
+      },
+      gridTemplateColumns: {
+        'auto1fr': 'auto 1fr',
+
       }
     },
   },
