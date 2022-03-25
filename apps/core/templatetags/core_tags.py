@@ -63,6 +63,6 @@ def get_products_dummy(length):
             "nombre": rand_name(),
             "precio": rand_price(100, 10000),
             "stars": random.randint(0, 5),
-            "imagen": f"https://picsum.photos/{img_w}/{img_h}"
+            "imagen": f"https://picsum.photos/id/{loop}/{img_w}/{img_h}"
         })
     return products

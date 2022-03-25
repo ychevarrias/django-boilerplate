@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer grid-cols-auto1fr {
+	grid-template-columns: 1fr auto	;
+}
+
 .sidebar ul.root {
 	@apply border-y border-sky-800
 }

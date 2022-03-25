@@ -4,25 +4,27 @@
 {% block css_adicional %}
 {% endblock %}
 {% block content %}
-<div class="flex mb-4">
-  <a class="btn link" href="/">
-    <i class="fa-solid fa-caret-left"></i>
-    Go to Index page
-  </a>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
-  {% for producto in 16|get_products_dummy %}
-  <div class="grid grid-flow-col auto-cols-auto1fr border shadow-lg h-32 rounded-xl">
-    <img class="w-32 h-32 object-cover rounded-l-lg" loading="lazy" src="{{ producto.imagen }}" alt="{{ producto.nombre }}">
-    <div class="p-4 relative">
-      <p>{{ producto.nombre }}
-        <small class="block"><i class="fa-solid fa-star text-yellow-300"></i> {{ producto.stars }}</small></p>
-      <p class="text-white absolute bottom-0 right-0 px-2 -bottom-2 -right-2 border rounded-full bg-indigo-500">
-        USD <strong>{{ producto.precio }}</strong>
-      </p>
-    </div>
+<div class="container mx-auto p-8">
+  <div class="flex mb-4">
+    <a class="btn link" href="/">
+      <i class="fa-solid fa-caret-left"></i>
+      Go to Index page
+    </a>
   </div>
-  {% endfor %}
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
+    {% for producto in 16|get_products_dummy %}
+    <div class="grid grid-flow-col auto-cols-auto1fr border shadow-lg h-32 rounded-xl">
+      <img class="w-32 h-32 object-cover rounded-l-lg" loading="lazy" src="{{ producto.imagen }}" alt="{{ producto.nombre }}">
+      <div class="p-4 relative">
+        <p>{{ producto.nombre }}
+          <small class="block"><i class="fa-solid fa-star text-yellow-300"></i> {{ producto.stars }}</small></p>
+        <p class="text-white absolute bottom-0 right-0 px-2 -bottom-2 -right-2 border rounded-full bg-indigo-500">
+          USD <strong>{{ producto.precio }}</strong>
+        </p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}
 {% block js_adicional %}

@@ -1,9 +1,13 @@
 module.exports = {
   content: [
-      "./templates/**/*.{html, js}",
-      "./static/**/*.{html, js}",
+    "./templates/**/*.{html, js}",
+    "./static/**/*.{html, js}",
   ],
   theme: {
+    _fontFamily: {
+      sans: ['Lato', 'Menlo', 'monospace'],
+      serif: ['Lato', 'Menlo', 'monospace'],
+    },
     extend: {
       colors: {
         clifford: '#da373d',
