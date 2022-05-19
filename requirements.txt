@@ -10,7 +10,7 @@ ipython==8.1.1
 psycopg2-binary==2.9.3
 requests==2.27.1
 pycryptodome==3.14.1
-celery==5.2.3
+celery==5.2.6
 django-celery-beat==2.2.1
 django-celery-results==2.3.0
 django-filter==21.1
