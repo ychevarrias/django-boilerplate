@@ -31,8 +31,8 @@ env = environ.Env(
     CACHE_URL=(str, 'redis://127.0.0.1:6379/1'),
     CELERY_REDIS_URL=(str, 'redis://127.0.0.1:6379/1'),
     STATIC_URL=(str, '/static/'),
-    STATIC_ROOT=(str, BASE_DIR / 'staticfiles/'),
-    MEDIA_URL=(str, BASE_DIR / '/media/'),
+    STATIC_ROOT=(str, str(BASE_DIR / 'staticfiles/')),
+    MEDIA_URL=(str, str(BASE_DIR / '/media/')),
     MEDIA_ROOT=(str, '/tmp/media/'),
     LOGIN_URL=(str, '/login/'),
     URL_PREFIX=(str, ''),
@@ -215,8 +215,8 @@ STATIC_ROOT = env('STATIC_ROOT')
 MEDIA_URL = env('MEDIA_URL')
 MEDIA_ROOT = env('MEDIA_ROOT')
 
-if DEBUG:
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+# if DEBUG:
+#     MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 
 STATICFILES_DIRS = [
