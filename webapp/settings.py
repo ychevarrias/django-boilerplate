@@ -150,6 +150,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'apps.core.utils.development.front_context',
+                'apps.core.context_processors.global_context',
             ],
             # 'libraries': {
             #     'core_tags': 'apps.core.templatetags.core_tags',
