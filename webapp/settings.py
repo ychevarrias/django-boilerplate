@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 from uuid import uuid4
 from datetime import timedelta
+import warnings
 import environ
 import os
 from django.utils.translation import gettext_lazy as _
@@ -26,6 +27,7 @@ SITE_ROOT = root()
 
 env = environ.Env(
     DEBUG=(bool, False),
+    ENABLE_EXTERNAL_STORAGE=(bool, False),
     FRONTEND_MODE=(bool, False),
     SECRET_KEY=(str, 'd9%@5%@0jv)40w*_z@ysty7te$hgkxcba8#)t4+_a24o8+h3ju'),
     CACHE_URL=(str, 'redis://127.0.0.1:6379/1'),
@@ -87,7 +89,6 @@ CACHEOPS_REDIS = env('CACHEOPS_REDIS')
 
 INSTALLED_APPS = [
     'grappelli',
-    'filebrowser',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -102,6 +103,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'django_filters',
     'ckeditor',
+    'storages',
 ]
 if CACHEOPS_REDIS:
     INSTALLED_APPS += [
@@ -310,3 +312,18 @@ CELERY_TRACK_STARTED = True
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 2000
 BUILD_UID = uuid4().hex
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+if env('ENABLE_EXTERNAL_STORAGE'):
+    if "filebrowser" in INSTALLED_APPS:
+        warnings.warn("Filebrowser and Storages are incompatible")
+    DEFAULT_FILE_STORAGE = 'apps.core.storages.MediaStorage'
+    # STATICFILES_STORAGE = 'apps.core.storages.StaticStorage'
+    AWS_S3_ENDPOINT_URL = env("AWS_S3_ENDPOINT_URL")
+    AWS_LOCATION = env("AWS_LOCATION")
+    AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
+    AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
+    AWS_S3_FILE_OVERWRITE = False
+    AWS_DEFAULT_ACL = env("AWS_DEFAULT_ACL") or None
+    AWS_S3_CUSTOM_DOMAIN = env("AWS_S3_CUSTOM_DOMAIN") or None
+
