@@ -12,7 +12,11 @@ class TaskTestView(TemplateView):
     template_name = "index.html"
 
     def get_context_data(self, **kwargs):
-        async_task = test_task.delay()
+        numbers_raw = self.request.GET.get("sum", "1,1")
+        numbers = map(int, numbers_raw.split(","))
+        async_task = test_task.apply(
+            countdown=5, args=tuple(numbers)
+        )
         kwargs["task_id"] = async_task.id
         return kwargs
 
