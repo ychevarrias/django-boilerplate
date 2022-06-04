@@ -1,6 +1,7 @@
 # Byte-compiled / optimized / DLL files
 yarn.lock
-node_modules/
+/node_modules/
+/staticfiles/
 __pycache__/
 *.py[cod]
 *$py.class

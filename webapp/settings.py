@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 from uuid import uuid4
 from datetime import timedelta
+import warnings
 import environ
 import os
 from django.utils.translation import gettext_lazy as _
@@ -26,12 +27,15 @@ SITE_ROOT = root()
 
 env = environ.Env(
     DEBUG=(bool, False),
+    ENABLE_EXTERNAL_STORAGE=(bool, False),
     FRONTEND_MODE=(bool, False),
     SECRET_KEY=(str, 'd9%@5%@0jv)40w*_z@ysty7te$hgkxcba8#)t4+_a24o8+h3ju'),
+    CACHE_URL=(str, 'redis://127.0.0.1:6379/1'),
+    CELERY_REDIS_URL=(str, 'redis://127.0.0.1:6379/1'),
     STATIC_URL=(str, '/static/'),
-    STATIC_ROOT=(str, '/tmp/static/'),
     MEDIA_URL=(str, '/media/'),
-    MEDIA_ROOT=(str, '/tmp/media/'),
+    STATIC_ROOT=(str, str(BASE_DIR / 'staticfiles/')),
+    MEDIA_ROOT=(str, str(BASE_DIR / 'media/')),
     LOGIN_URL=(str, '/login/'),
     URL_PREFIX=(str, ''),
     DEFAULT_FROM_EMAIL=(str, 'webmaster@localhost'),
@@ -85,12 +89,12 @@ CACHEOPS_REDIS = env('CACHEOPS_REDIS')
 
 INSTALLED_APPS = [
     'grappelli',
-    'filebrowser',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    # 'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'celery',
     'django_celery_beat',
@@ -99,6 +103,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'django_filters',
     'ckeditor',
+    'storages',
 ]
 if CACHEOPS_REDIS:
     INSTALLED_APPS += [
@@ -116,6 +121,7 @@ INSTALLED_APPS += [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -144,6 +150,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'apps.core.utils.development.front_context',
+                'apps.core.context_processors.global_context',
             ],
             # 'libraries': {
             #     'core_tags': 'apps.core.templatetags.core_tags',
@@ -211,8 +218,8 @@ STATIC_ROOT = env('STATIC_ROOT')
 MEDIA_URL = env('MEDIA_URL')
 MEDIA_ROOT = env('MEDIA_ROOT')
 
-if DEBUG:
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+# if DEBUG:
+#     MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 
 STATICFILES_DIRS = [
@@ -305,4 +312,19 @@ CELERY_TRACK_STARTED = True
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 2000
 BUILD_UID = uuid4().hex
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+if env('ENABLE_EXTERNAL_STORAGE'):
+    if "filebrowser" in INSTALLED_APPS:
+        warnings.warn("Filebrowser and Storages are incompatible")
+    DEFAULT_FILE_STORAGE = 'apps.core.storages.MediaStorage'
+    # STATICFILES_STORAGE = 'apps.core.storages.StaticStorage'
+    AWS_S3_ENDPOINT_URL = env("AWS_S3_ENDPOINT_URL")
+    AWS_LOCATION = env("AWS_LOCATION")
+    AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
+    AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
+    AWS_S3_FILE_OVERWRITE = False
+    AWS_DEFAULT_ACL = env("AWS_DEFAULT_ACL") or None
+    AWS_S3_CUSTOM_DOMAIN = env("AWS_S3_CUSTOM_DOMAIN") or None
 

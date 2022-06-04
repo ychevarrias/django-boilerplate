@@ -1,4 +1,4 @@
-Django==3.2.12
+Django==3.2.13
 djangorestframework==3.13.1
 djangorestframework-simplejwt==5.1.0
 django-environ==0.8.1
@@ -10,7 +10,7 @@ ipython==8.1.1
 psycopg2-binary==2.9.3
 requests==2.27.1
 pycryptodome==3.14.1
-celery==5.2.3
+celery==5.2.6
 django-celery-beat==2.2.1
 django-celery-results==2.3.0
 django-filter==21.1
@@ -18,3 +18,8 @@ django-cacheops==6.0
 django-filebrowser==4.0.1
 django-ckeditor==6.2.0
 django-filter==21.1
+gunicorn==20.1.0
+Brotli==1.0.9
+whitenoise[brotli]==6.1.0
+django-storages==1.12.3
+boto3==1.23.5

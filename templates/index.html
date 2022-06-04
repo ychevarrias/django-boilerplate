@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+</head>
+<body>
+    <h1>Home Page content</h1>
+    {% if task_id %}
+    <small>Running Task: id:{{ task_id }}</small>
+    {% else %}
+    <img src="{{ infosite.favicon.url }}" alt="Favicon">
+    {% endif %}
+    <script src="{% static 'js/main.js' %}" type="application/javascript"></script>
+</body>
+</html>
