@@ -17,3 +17,8 @@ django-filter==23.2
 django-cacheops==7.0.1
 django-filebrowser==4.0.2
 django-ckeditor==6.6.1
+gunicorn==20.1.0
+Brotli==1.0.9
+whitenoise[brotli]==6.1.0
+django-storages==1.12.3
+boto3==1.23.5

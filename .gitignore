@@ -1,4 +1,6 @@
 # Byte-compiled / optimized / DLL files
+/node_modules/
+/staticfiles/
 __pycache__/
 *.py[cod]
 *$py.class
@@ -130,7 +132,6 @@ dmypy.json
 
 .swp
 media/*
-
 celerybeat-schedule.bak
 celerybeat-schedule.dat
 celerybeat-schedule.dir

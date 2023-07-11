@@ -24,7 +24,7 @@ from rest_framework_simplejwt.views import (
 )
 from filebrowser.sites import site
 from apps.core.utils.development import TemplateRender
-from apps.usuario.views import HomeView
+from apps.usuario.views import HomeView, TaskTestView
 
 urlpatterns = [
     path('admin/filebrowser/', site.urls),
@@ -32,6 +32,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/jwt/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('auth/jwt/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('test-async-task/', TaskTestView.as_view(), name='test-async-task'),
     path('', HomeView.as_view(), name='home'),
 ]
 
