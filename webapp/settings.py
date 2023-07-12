@@ -71,23 +71,34 @@ vars().update(EMAIL_CONFIG)
 CACHEOPS_REDIS = env('CACHEOPS_REDIS')
 # Application definition
 
-INSTALLED_APPS = [
+SHARED_APPS = [
+    'django_tenants',
+    'django.contrib.contenttypes',
+    'apps.tenant',
     'grappelli',
     'filebrowser',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
     'celery',
-    'django_celery_beat',
-    'django_celery_results',
     'rest_framework',
     'django_extensions',
     'django_filters',
     'ckeditor',
+    'apps.public_page',
 ]
+
+TENANT_APPS = (
+    'django.contrib.admin',
+    'django.contrib.auth', 
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'django_celery_beat',
+    'django_celery_results',
+    'apps.usuario',
+    'apps.core',
+)
+
+INSTALLED_APPS = list(SHARED_APPS) + [app for app in TENANT_APPS if app not in SHARED_APPS]
+
 if CACHEOPS_REDIS:
     INSTALLED_APPS += [
         'cacheops'
@@ -97,12 +108,11 @@ if DEBUG:
         'debug_toolbar',
     ]
 
-INSTALLED_APPS += [
-    'apps.usuario',
-    'apps.core',
-]
+TENANT_MODEL = "tenant.Client" # app.Model
+TENANT_DOMAIN_MODEL = "tenant.Domain"  # app.Model
 
 MIDDLEWARE = [
+    'django_tenants.middleware.main.TenantMainMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -127,6 +137,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.request',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -154,6 +165,10 @@ DATABASES = {
 }
 
 
+DATABASES["default"]["ENGINE"] = "django_tenants.postgresql_backend"
+DATABASE_ROUTERS = (
+    'django_tenants.routers.TenantSyncRouter',
+)
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
@@ -268,12 +283,15 @@ REST_FRAMEWORK = {
 }
 
 INTERNAL_IPS = (
-    '127.0.0.1'
+    '127.0.0.1',
 )
 
 CACHES = {
     'default': env.cache('CACHE_URL')
 }
+
+CACHES['default']['KEY_FUNCTION'] = 'django_tenants.cache.make_key'
+CACHES['default']['REVERSE_KEY_FUNCTION'] = 'django_tenants.cache.reverse_key'
 
 CACHEOPS = {
     # 'auth.*': {'ops': 'get', 'timeout': 60*15},
@@ -292,3 +310,4 @@ CELERY_TRACK_STARTED = True
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 2000
 BUILD_UID = uuid4().hex
 
+PUBLIC_SCHEMA_URLCONF = 'webapp.urls_public'
