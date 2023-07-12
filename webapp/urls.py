@@ -32,7 +32,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/jwt/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('auth/jwt/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('', HomeView.as_view(), name='home'),
+    path('', include('apps.tenant.urls'), name='tenant'),
 ]
 
 if settings.URL_PREFIX:

@@ -1,3 +1,6 @@
 from django.shortcuts import render
+from django.views.generic import TemplateView
 
-# Create your views here.
+
+class TenantHomeView(TemplateView):
+    template_name = "tenants/index.html"
