@@ -299,8 +299,8 @@ CELERY_TRACK_STARTED = True
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 2000
 BUILD_UID = uuid4().hex
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-
-if env('ENABLE_EXTERNAL_STORAGE'):
+ENABLE_EXTERNAL_STORAGE = env('ENABLE_EXTERNAL_STORAGE')
+if ENABLE_EXTERNAL_STORAGE:
     if "filebrowser" in INSTALLED_APPS:
         warnings.warn("Filebrowser and Storages are incompatible")
     DEFAULT_FILE_STORAGE = 'apps.core.storages.MediaStorage'
