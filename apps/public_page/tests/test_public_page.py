@@ -7,6 +7,12 @@ from apps.public_page.views import HomeView
 
 class TenantPublicPageTest(FastTenantTestCase):
 
+
+    @classmethod
+    def get_test_tenant_domain(cls):
+        return 'public.fast-test.com'
+
+
     @classmethod
     def get_test_schema_name(cls):
         return 'public'
