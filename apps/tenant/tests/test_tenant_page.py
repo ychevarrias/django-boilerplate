@@ -10,8 +10,18 @@ class TenantHomePageTest(FastTenantTestCase):
         super().setUp()
         self.c = TenantClient(self.tenant)
 
-    def test_user_profile_view(self):
+    def test_home_view(self):
         response = self.c.get(reverse('tenant:home'))
         self.assertEqual(response.status_code, 200)
 
+
+class TenantLoginPageTest(FastTenantTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.c = TenantClient(self.tenant)
+
+    def test_login_view(self):
+        response = self.c.get(reverse('tenant:login'))
+        self.assertEqual(response.status_code, 200)
 

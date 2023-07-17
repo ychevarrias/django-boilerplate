@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Setup Domain</title>
+  <style>
+    .errorlist {
+      color: #db4040;
+      margin: 0;
+      padding: 0;
+      margin-top: 5px;
+    }
+    .errorlist li {
+      margin-left: 15px;
+    }
+    table tr th {
+      text-align: end;
+    }
+    form.sending {
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+<form action="." method="post" id="domainFormId">
+  {% csrf_token %}
+  <table>
+    <tbody>
+      <tr>
+        <th><label for="id_schema_name">Nombre de Entidad:</label></th>
+        <td>
+          {{ form.entity_name }}
+          {{ form.entity_name.errors }}
+        </td>
+      </tr>
+      <tr>
+        <th><label for="id_domain">Domain:</label></th>
+        <td>
+          <p style="margin: 0">{{ form.domain }}{{ domain_suffix }}</p>
+          {{ form.domain.errors }}
+        </td>
+      </tr>
+      <tr>
+        <th><label for="id_schema_name">Schema Name:</label></th>
+        <td>
+          {{ form.schema_name }}
+          {{ form.schema_name.errors }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <input type="submit" id="submitFormButton" value="Crear Dominio">
+</form>
+<script type="application/javascript">
+  let focusStorage = {};
+  let formSetup = document.getElementById("domainFormId");
+  let formSubmitButton = document.getElementById("submitFormButton");
+  let formDomain = document.getElementById("id_domain");
+  let formSchemaName = document.getElementById("id_schema_name");
+  const slugify = (str) => {
+    return str
+          .toString()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .toLowerCase()
+          .trim()
+          .replace(/\s+/g, '-')
+          .replace(/[^\w-]+/g, '')
+          .replace(/--+/g, '-')
+
+  }
+  formSetup.addEventListener("submit", function (event){
+      this.classList.add("sending")
+      formSubmitButton.value = 'Creando ';
+      setInterval(() => {
+          if(formSubmitButton.value.endsWith('...')){
+              formSubmitButton.value = formSubmitButton.value.replace("...", "")
+              return null
+          }
+          formSubmitButton.value += '.';
+      }, 250)
+  });
+  document.getElementById("id_entity_name").addEventListener("input", function (event){
+    let value = event.target.value;
+    value = value.toLowerCase().replaceAll("ñ", "n").replaceAll("ü", "u")
+    value = slugify(value);
+    formDomain.value = value;
+    formSchemaName.value = value.replaceAll("-", "_");
+
+  });
+  document.getElementById("id_entity_name").focus();
+</script>
+</body>
+</html>

@@ -32,10 +32,11 @@ env = environ.Env(
     ALLOWED_HOSTS=(list, 'mysite.pe'),
     ATOMIC_REQUESTS=(bool, False),
     CACHEOPS_REDIS=(str, ''),
+    DOMAIN_SUFFIX=(str, '.localhost'),
     DJANGO_LOG_LEVEL=(str, 'WARNING'),
 )
 environ.Env.read_env(os.path.join(SITE_ROOT, '.env'))  # reading .env file
-
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -48,6 +49,7 @@ FRONTEND_MODE = env('FRONTEND_MODE')
 
 
 ALLOWED_HOSTS = env('ALLOWED_HOSTS')
+DOMAIN_SUFFIX = env('DOMAIN_SUFFIX')
 URL_PREFIX = env('URL_PREFIX')
 
 

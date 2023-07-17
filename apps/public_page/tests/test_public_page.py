@@ -23,6 +23,5 @@ class TenantPublicPageTest(FastTenantTestCase):
 
     def test_user_profile_view(self):
         response = self.c.get(reverse("public_page:home", urlconf='webapp.urls_public'))
-        self.assertEqual(response.resolver_match.func.__name__, HomeView.as_view().__name__)
-        print(response.resolver_match.func, HomeView.as_view())
+        self.assertIn(b'PublicHomePage', response.content, "No respondió la vista pública")
         self.assertEqual(response.status_code, 200)
