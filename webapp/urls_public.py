@@ -24,10 +24,10 @@ from rest_framework_simplejwt.views import (
 )
 from filebrowser.sites import site
 from apps.core.utils.development import TemplateRender
-from apps.public_page.views import HomeView
+
 
 urlpatterns = [
-    path('', HomeView.as_view(), name='home'),
+    path('', include('apps.public_page.urls'), name='tenant'),
 ]
 
 if settings.URL_PREFIX:
