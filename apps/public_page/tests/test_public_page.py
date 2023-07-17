@@ -42,6 +42,9 @@ class TenantCreationTest(FastTenantTestCase):
     def get_test_schema_name(cls):
         return 'public'
 
+    def get_verbosity():
+        return 0
+
     def setUp(self):
         super().setUp()
         self.c = TenantClient(self.tenant)

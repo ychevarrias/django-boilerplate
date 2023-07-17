@@ -51,7 +51,7 @@ class DomainRegister(forms.Form):
                 on_trial=False,
                 paid_until=timezone.localtime(),
             )
-            client.save()
+            client.save(verbosity=0)
             client.domains.create(
                 domain=self.get_domain(), is_primary=True
             )
