@@ -26,8 +26,4 @@ class CreateTenantView(FormView):
     def get_context_data(self, **kwargs):
         kwargs = super().get_context_data(**kwargs)
         kwargs["domain_suffix"] = settings.DOMAIN_SUFFIX
-        if not self.request.session.get("xmp"):
-            self.request.session["xmp"] = 0
-        self.request.session["xmp"] += 1
-        print(self.request.session["xmp"])
         return kwargs
