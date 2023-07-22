@@ -15,6 +15,7 @@
     }
     table tr th {
       text-align: end;
+      vertical-align: top;
     }
     form.sending {
       pointer-events: none;
@@ -22,7 +23,7 @@
   </style>
 </head>
 <body>
-<form action="." method="post" id="domainFormId">
+<form action="." method="post" id="domainFormId" autocomplete="off">
   {% csrf_token %}
   <table>
     <tbody>
@@ -47,16 +48,35 @@
           {{ form.schema_name.errors }}
         </td>
       </tr>
+      <tr>
+        <th><label for="id_token">Token:</label></th>
+        <td>
+          {{ form.token }}
+          <a id="sendTokenRequest" href="{% url 'public_page:pin_request' %}">Request a new Token</a>
+          {{ form.token.errors }}
+        </td>
+      </tr>
+      <tr>
+        <th><label for="id_token">Keep alive token:</label></th>
+        <td>
+          {{ form.keep_alive_token }}
+          {{ form.keep_alive_token.errors }}
+        </td>
+      </tr>
     </tbody>
   </table>
   <input type="submit" id="submitFormButton" value="Crear Dominio">
 </form>
 <script type="application/javascript">
   let focusStorage = {};
+  let tokenRequest = document.getElementById("sendTokenRequest");
   let formSetup = document.getElementById("domainFormId");
   let formSubmitButton = document.getElementById("submitFormButton");
   let formDomain = document.getElementById("id_domain");
   let formSchemaName = document.getElementById("id_schema_name");
+
+
+
   const slugify = (str) => {
     return str
           .toString()
@@ -86,7 +106,18 @@
     value = slugify(value);
     formDomain.value = value;
     formSchemaName.value = value.replaceAll("-", "_");
-
+  });
+  tokenRequest.addEventListener("click", function (event){
+    event.preventDefault()
+    let uri = event.target.href;
+    fetch(uri).then(response => {
+      return response.json()
+    }).catch((error) => {
+      console.error('Error:', error)
+    })
+    .then((response) => {
+      console.log('Success:', response)
+    });
   });
   document.getElementById("id_entity_name").focus();
 </script>

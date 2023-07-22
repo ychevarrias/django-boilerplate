@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.conf import settings
-from django.http import HttpResponseRedirect
+from django.core.mail import EmailMessage
+from django.http import HttpResponseRedirect, JsonResponse, Http404
 from django.views.generic import View, FormView, TemplateView
+from apps.core.utils.public_tokens import check_sended, get_token
 from .forms import DomainRegister
 
 
@@ -27,3 +29,41 @@ class CreateTenantView(FormView):
         kwargs = super().get_context_data(**kwargs)
         kwargs["domain_suffix"] = settings.DOMAIN_SUFFIX
         return kwargs
+
+
+class PINRequestView(View):
+
+    def get_admin_email_to(self):
+        result = []
+        for admin in settings.ADMINS:
+            result.append(
+                f"{admin[0]} <{admin[1]}>"
+            )
+        return result
+
+    def get(self, request):
+        print(request.headers)
+        if request.META.get("HTTP_REFERER"):
+            if check_sended():
+                return JsonResponse({
+                    "status": "already_sent"
+                }, status=200)
+            token = get_token()
+            html_content = f"""
+            <p>Su token de acceso temporal es:<br>
+            <strong>{token}</strong><br>
+            <small>recuerde que el tiempo es expiración es de 10 minutos</small>
+            </p>
+            """
+            msg = EmailMessage(
+                "Token de acceso",
+                html_content, 
+                settings.DEFAULT_FROM_EMAIL, 
+                self.get_admin_email_to()
+            )
+            msg.content_subtype = "html"  # Main content is now text/html
+            msg.send()
+            return JsonResponse({
+                "status": "sent"
+            }, status=201)
+        raise Http404

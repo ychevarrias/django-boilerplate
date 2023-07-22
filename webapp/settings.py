@@ -15,6 +15,7 @@ SITE_ROOT = root()
 env = environ.Env(
     DEBUG=(bool, False),
     FRONTEND_MODE=(bool, False),
+    EMAIL_BACKEND = (str, "django.core.mail.backends.console.EmailBackend"),
     SECRET_KEY=(str, 'd9%@5%@0jv)40w*_z@ysty7te$hgkxcba8#)t4+_a24o8+h3ju'),
     STATIC_URL=(str, '/static/'),
     STATIC_ROOT=(str, '/tmp/static/'),
@@ -33,6 +34,7 @@ env = environ.Env(
     ATOMIC_REQUESTS=(bool, False),
     CACHEOPS_REDIS=(str, ''),
     DOMAIN_SUFFIX=(str, '.localhost'),
+    DJANGO_ADMINS=(list, list()),
     DJANGO_LOG_LEVEL=(str, 'WARNING'),
 )
 environ.Env.read_env(os.path.join(SITE_ROOT, '.env'))  # reading .env file
@@ -51,6 +53,7 @@ FRONTEND_MODE = env('FRONTEND_MODE')
 ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 DOMAIN_SUFFIX = env('DOMAIN_SUFFIX')
 URL_PREFIX = env('URL_PREFIX')
+ADMINS = [tuple(x.split(':')) for x in env.list('DJANGO_ADMINS')]
 
 
 SESSION_COOKIE_NAME = env('SESSION_COOKIE_NAME')
@@ -68,6 +71,7 @@ EMAIL_CONFIG = env.email_url(
     default='smtp+ssl://someuser:somepwd@someserver.com:465'
 )
 vars().update(EMAIL_CONFIG)
+EMAIL_BACKEND = env("EMAIL_BACKEND")
 
 
 CACHEOPS_REDIS = env('CACHEOPS_REDIS')
@@ -250,10 +254,16 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'verbose',
         },
+        "mail_admins": {
+            "level": "ERROR",
+            "class": "django.utils.log.AdminEmailHandler",
+            "include_html": True,
+        },
+
     },
     'loggers': {
         'apps': {
-            'handlers': ['file', 'console'],
+            'handlers': ['file', 'console', 'mail_admins'],
             'level': env('DJANGO_LOG_LEVEL'),
             'propagate': False
         },
@@ -311,5 +321,6 @@ CELERY_TRACK_STARTED = True
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 2000
 BUILD_UID = uuid4().hex
+BUILD_ID = BUILD_UID[:6]
 
 PUBLIC_SCHEMA_URLCONF = 'webapp.urls_public'

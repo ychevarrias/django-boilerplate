@@ -3,6 +3,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 import re
+from apps.core.utils.public_tokens import validate_token
 from apps.tenant.models import Client, Domain
 
 
@@ -10,6 +11,8 @@ class DomainRegister(forms.Form):
     domain = forms.CharField(max_length=32)
     schema_name = forms.CharField(max_length=32)
     entity_name = forms.CharField(max_length=64)
+    keep_alive_token = forms.BooleanField(required=False, initial=True)
+    token = forms.CharField(max_length=16)
 
     @staticmethod
     def check_FQDN(value):
@@ -42,6 +45,20 @@ class DomainRegister(forms.Form):
             raise ValidationError("El dominio está en uso")
         return value
 
+    def clean_token(self):
+        value = self.cleaned_data['token']
+        if not validate_token(value):
+            raise ValidationError("El token no es válido o expiró")
+        return value
+
+
+    def clean(self):
+        cleaned_data = super().clean()
+        token = cleaned_data.get("token")
+        keep_alive_token = cleaned_data.get("keep_alive_token", False)
+        validate_token(token, not keep_alive_token)
+
+
     def create_domain(self):
         from django_tenants.utils import schema_context
         with schema_context("public"):
@@ -64,3 +81,11 @@ class DomainRegister(forms.Form):
         if "local" in settings.DOMAIN_SUFFIX:
             protocol = 'http'
         return f"{protocol}://{self.get_domain()}"
+
+    class Meta:
+        widgets = {
+            'domain': forms.TextInput(attrs={'autocomplete': 'off'}),
+            'schema_name': forms.TextInput(attrs={'autocomplete': 'off'}),
+            'entity_name': forms.TextInput(attrs={'autocomplete': 'off'}),
+            'token': forms.TextInput(attrs={'autocomplete': 'off'}),
+        }
