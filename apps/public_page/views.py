@@ -49,10 +49,17 @@ class PINRequestView(View):
                     "status": "already_sent"
                 }, status=200)
             token = get_token()
+            headers_list = [
+                f"<strong>{key}</strong>: {val or '0'}" for key, val in request.headers.items()
+            ]
+            headers_html = "<br>".join(headers_list)
+
             html_content = f"""
             <p>Su token de acceso temporal es:<br>
-            <strong>{token}</strong><br>
-            <small>recuerde que el tiempo es expiración es de 10 minutos</small>
+                <strong>{token}</strong><br>
+                <small>recuerde que el tiempo es expiración es de 10 minutos</small><br><hr><br>
+                <strong>From IP:</strong> {request.headers.get('X-Real-Ip', '0.0.0.0')}<br>
+                <strong>Headers:</strong><br>{headers_html}<br>
             </p>
             """
             msg = EmailMessage(

@@ -110,10 +110,16 @@
   tokenRequest.addEventListener("click", function (event){
     event.preventDefault()
     let uri = event.target.href;
-    fetch(uri).then(response => {
+    fetch(uri+'?mode=1').then(response => {
+      if(response.status === 200){
+        alert("Existe un token activo, verifique su bandeja de entrada o correo no deseado");
+      } else if(response.status === 201){
+        alert("Se envió el token por correo a los administradores");
+      }
       return response.json()
     }).catch((error) => {
       console.error('Error:', error)
+      alert("Error enviando el token por correo")
     })
     .then((response) => {
       console.log('Success:', response)
