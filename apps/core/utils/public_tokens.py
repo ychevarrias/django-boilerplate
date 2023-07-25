@@ -5,6 +5,7 @@ from django.core.cache import cache
 
 TOKEN_SECONDS_LIFE = 60*10
 PUBLIC_TOKEN_SENDED = f"public_token_sended"
+PUBLIC_TOKEN_KEY = f"public_token_key"
 
 
 def _set_token_created():
@@ -22,31 +23,31 @@ def check_sended():
 def get_token(diff=2):
     hashed_string = uuid4().hex
     token = hashed_string[-16:]
-    cache.set(token, 1, TOKEN_SECONDS_LIFE)
+    cache.set(PUBLIC_TOKEN_KEY, token, TOKEN_SECONDS_LIFE)
     _set_token_created()
     return token
 
 
 def validate_token(token, clear=False):
-    if not cache.get(token):
+    if not cache.get(PUBLIC_TOKEN_KEY) == token:
         return False
     if clear:
-        cache.delete(token)
+        cache.delete(PUBLIC_TOKEN_KEY)
         _unset_token_created()
     return True
 
 
 def get_pin():
-    pin = str(randint(11111,999999)).zfill(6)
-    cache.set(pin, 1, TOKEN_SECONDS_LIFE)
+    pin = str(randint(11111, 999999)).zfill(6)
+    cache.set(PUBLIC_TOKEN_KEY, pin, TOKEN_SECONDS_LIFE)
     _set_token_created()
     return pin
 
 
 def validate_ping(pin, clear=False):
-    if not cache.get(pin):
+    if not cache.get(pin) == PUBLIC_TOKEN_KEY:
         return False
     if clear:
-        cache.delete(pin)
+        cache.delete(PUBLIC_TOKEN_KEY)
         _unset_token_created()
     return True

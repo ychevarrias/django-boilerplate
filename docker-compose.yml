@@ -18,5 +18,7 @@ services:
       - POSTGRES_USER=userdb
       - POSTGRES_PASSWORD=passdb
       - POSTGRES_DB=database
+  redis:
+    image: redis:6.2.12-alpine
 volumes:
   postgres_data:
