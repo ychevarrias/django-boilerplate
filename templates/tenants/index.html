@@ -3,10 +3,10 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Tenant Home</title>
+	<title>{{ request.tenant.name }}</title>
 	<link rel="stylesheet" href="">
 </head>
 <body>
-	<h1>Tenant HomePage</h1>
+	<h1>[{{ request.tenant.name }}] HomePage</h1>
 </body>
 </html>

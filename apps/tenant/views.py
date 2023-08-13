@@ -9,6 +9,7 @@ class TenantHomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         self.request.session["tenant"] = f"{self.request.tenant}"
+        kwargs["tenant_name"] = f"{self.request.tenant}"
         return kwargs
 
 
