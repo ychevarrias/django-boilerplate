@@ -31,9 +31,7 @@ class TenantPublicPageTest(FastTenantTestCase):
         self.assertEqual(response.status_code, 200)
 
 
-
 class TenantCreationTest(FastTenantTestCase):
-
 
     @classmethod
     def get_test_tenant_domain(cls):
@@ -44,23 +42,26 @@ class TenantCreationTest(FastTenantTestCase):
     def get_test_schema_name(cls):
         return 'public'
 
-    def get_verbosity(self):
+    @classmethod
+    def get_verbosity(cls):
         return 0
 
     def setUp(self):
         super().setUp()
-        self.c = TenantClient(self.tenant)
+        self.c = TenantClient(
+            self.tenant,
+            HTTP_USER_AGENT='Mozilla/5.0',
+        )
 
     @override_settings(DOMAIN_SUFFIX=".fast-test.com")
     def test_correct_creation(self):
         response = self.c.get(
             reverse("public_page:pin_request", urlconf='webapp.urls_public'),
             headers={
-                "referer": "http://fast-test.com/example/"
+                "referer": "https://fast-test.com/example/"
             }
         )
         self.assertIn(response.status_code, [200, 201])
-        print(response.content)
         response = self.c.post(
             reverse("public_page:create_tenant", urlconf='webapp.urls_public'),
             data={
@@ -68,7 +69,7 @@ class TenantCreationTest(FastTenantTestCase):
                 "schema_name": "other_tenant",
                 "entity_name": "Other Tenant",
                 "token": cache.get(PUBLIC_TOKEN_KEY, ''),
-            }
+            },
         )
         self.assertEqual(response.status_code, 302)
         count_regs = Domain.objects.filter(

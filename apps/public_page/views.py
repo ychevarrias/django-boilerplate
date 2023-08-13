@@ -15,7 +15,6 @@ class CreateTenantView(FormView):
     form_class = DomainRegister
     template_name = "public/create_tenant.html"
 
-
     def form_valid(self, form):
         form.create_domain()
         return HttpResponseRedirect(form.get_success_url())
@@ -42,7 +41,6 @@ class PINRequestView(View):
         return result
 
     def get(self, request):
-        print(request.headers)
         if request.META.get("HTTP_REFERER"):
             if check_sended():
                 return JsonResponse({
