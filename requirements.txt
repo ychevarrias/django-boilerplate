@@ -19,3 +19,4 @@ django-filter==23.2
 django-cacheops==7.0.1
 django-filebrowser==4.0.2
 django-ckeditor==6.6.1
+django-tenant-users==1.2.0

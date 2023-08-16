@@ -1,10 +1,12 @@
+import re
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils import timezone
-import re
+from apps.core.multi_tenant_utils.tasks import provision_tenant
 from apps.core.utils.public_tokens import validate_token
 from apps.tenant.models import Client, Domain
+from apps.usuario.models import User
 
 
 class DomainRegister(forms.Form):
@@ -62,16 +64,32 @@ class DomainRegister(forms.Form):
     def create_domain(self):
         from django_tenants.utils import schema_context
         with schema_context("public"):
-            client = Client(
-                schema_name=self.cleaned_data["schema_name"],
-                name=self.cleaned_data["entity_name"],
-                on_trial=False,
-                paid_until=timezone.localtime(),
+            user = User.objects.order_by("id").first()
+            if user is None:
+                user = User.objects.create_user(
+                    email="root@localhost",
+                    password='password',
+                    is_active=True
+                )
+            user_email = user.email
+            provision_tenant(
+                tenant_name=self.cleaned_data["entity_name"],
+                tenant_slug=self.cleaned_data["domain"],
+                user_email=user_email,
+                verbosity=0,
+                add_timestamp=False,
             )
-            client.save(verbosity=0)
-            client.domains.create(
-                domain=self.get_domain(), is_primary=True
-            )
+
+            # client = Client(
+            #     schema_name=self.cleaned_data["schema_name"],
+            #     name=self.cleaned_data["entity_name"],
+            #     on_trial=False,
+            #     paid_until=timezone.localtime(),
+            # )
+            # client.save(verbosity=0)
+            # client.domains.create(
+            #     domain=self.get_domain(), is_primary=True
+            # )
 
     def get_domain(self):
         return f"{self.cleaned_data['domain']}{settings.DOMAIN_SUFFIX}"

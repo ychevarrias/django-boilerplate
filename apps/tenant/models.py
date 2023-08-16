@@ -3,11 +3,12 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from django_tenants.models import TenantMixin, DomainMixin
+from tenant_users.tenants.models import TenantBase
 from django.utils.text import slugify
 logger = logging.getLogger(__name__)
 
 
-class Client(TenantMixin):
+class Client(TenantBase):
     name = models.CharField(max_length=100)
     paid_until = models.DateField(auto_now_add=True)
     on_trial = models.BooleanField(default=False)

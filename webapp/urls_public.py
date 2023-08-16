@@ -28,6 +28,11 @@ from apps.core.utils.development import TemplateRender
 
 urlpatterns = [
     path('', include('apps.public_page.urls'), name='tenant'),
+    path('admin/filebrowser/', site.urls),
+    path('grappelli/', include('grappelli.urls')),
+    path('admin/', admin.site.urls),
+    path('auth/jwt/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('auth/jwt/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
 
 if settings.URL_PREFIX:

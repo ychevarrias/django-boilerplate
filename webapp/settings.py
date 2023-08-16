@@ -39,6 +39,9 @@ env = environ.Env(
 )
 environ.Env.read_env(os.path.join(SITE_ROOT, '.env'))  # reading .env file
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -48,10 +51,15 @@ AUTH_USER_MODEL = "usuario.User"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 FRONTEND_MODE = env('FRONTEND_MODE')
-
+AUTHENTICATION_BACKENDS = (
+    'tenant_users.permissions.backend.UserBackend',
+)
 
 ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 DOMAIN_SUFFIX = env('DOMAIN_SUFFIX')
+TENANT_USERS_DOMAIN = DOMAIN_SUFFIX[1:]
+SESSION_COOKIE_DOMAIN = DOMAIN_SUFFIX
+CSRF_COOKIE_DOMAIN = SESSION_COOKIE_DOMAIN
 URL_PREFIX = env('URL_PREFIX')
 ADMINS = [tuple(x.split(':')) for x in env.list('DJANGO_ADMINS')]
 
@@ -78,31 +86,37 @@ CACHEOPS_REDIS = env('CACHEOPS_REDIS')
 # Application definition
 
 SHARED_APPS = [
-    'django_tenants',
-    'django.contrib.contenttypes',
-    'apps.tenant',
     'grappelli',
     'filebrowser',
+    'django_tenants',
+    'django.contrib.admin',
+    'django.contrib.sessions',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'apps.tenant',
+    'tenant_users.permissions',
+    'tenant_users.tenants',
     'celery',
     'rest_framework',
     'django_extensions',
     'django_filters',
     'ckeditor',
     'apps.public_page',
+    'apps.usuario',
+    'apps.core',
 ]
 
 TENANT_APPS = (
     'django.contrib.admin',
-    'django.contrib.auth', 
-    'django.contrib.sessions',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_celery_beat',
     'django_celery_results',
-    'apps.usuario',
+    'tenant_users.permissions',
     'apps.core',
 )
-
 INSTALLED_APPS = list(SHARED_APPS) + [app for app in TENANT_APPS if app not in SHARED_APPS]
 
 if CACHEOPS_REDIS:
@@ -114,7 +128,7 @@ if DEBUG:
         'debug_toolbar',
     ]
 
-TENANT_MODEL = "tenant.Client" # app.Model
+TENANT_MODEL = "tenant.Client"  # app.Model
 TENANT_DOMAIN_MODEL = "tenant.Domain"  # app.Model
 
 MIDDLEWARE = [
@@ -302,8 +316,8 @@ CACHES = {
     'default': env.cache('CACHE_URL')
 }
 
-CACHES['default']['KEY_FUNCTION'] = 'django_tenants.cache.make_key'
-CACHES['default']['REVERSE_KEY_FUNCTION'] = 'django_tenants.cache.reverse_key'
+CACHES['default']['KEY_FUNCTION'] = 'apps.core.cache.make_key'
+CACHES['default']['REVERSE_KEY_FUNCTION'] = 'apps.core.reverse_key'
 
 CACHEOPS = {
     # 'auth.*': {'ops': 'get', 'timeout': 60*15},

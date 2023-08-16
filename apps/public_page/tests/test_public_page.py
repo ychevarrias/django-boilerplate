@@ -1,3 +1,4 @@
+from django.conf import settings
 from django_tenants.urlresolvers import reverse
 from django.utils import timezone
 from django_tenants.test.cases import FastTenantTestCase
@@ -7,15 +8,10 @@ from apps.tenant.models import Domain
 from django.test import TestCase, override_settings
 from apps.core.utils.public_tokens import PUBLIC_TOKEN_KEY
 from django.core.cache import cache
+from apps.core.test_utils import FastTenantTestCase
 
 
 class TenantPublicPageTest(FastTenantTestCase):
-
-
-    @classmethod
-    def get_test_tenant_domain(cls):
-        return 'public.fast-test.com'
-
 
     @classmethod
     def get_test_schema_name(cls):
@@ -34,11 +30,6 @@ class TenantPublicPageTest(FastTenantTestCase):
 class TenantCreationTest(FastTenantTestCase):
 
     @classmethod
-    def get_test_tenant_domain(cls):
-        return 'public.fast-test.com'
-
-
-    @classmethod
     def get_test_schema_name(cls):
         return 'public'
 
@@ -53,7 +44,6 @@ class TenantCreationTest(FastTenantTestCase):
             HTTP_USER_AGENT='Mozilla/5.0',
         )
 
-    @override_settings(DOMAIN_SUFFIX=".fast-test.com")
     def test_correct_creation(self):
         response = self.c.get(
             reverse("public_page:pin_request", urlconf='webapp.urls_public'),
@@ -73,8 +63,7 @@ class TenantCreationTest(FastTenantTestCase):
         )
         self.assertEqual(response.status_code, 302)
         count_regs = Domain.objects.filter(
-            domain__exact='other-tenant.fast-test.com',
-            tenant__schema_name='other_tenant'
+            domain__exact=f'other-tenant.{settings.TENANT_USERS_DOMAIN}',
         ).count()
         self.assertEqual(count_regs, 1, "No se registró el nuevo Tenant")
 
@@ -87,4 +76,5 @@ class TenantCreationTest(FastTenantTestCase):
                 "entity_name": "Other Tenant",
             }
         )
+        print("response.request -->>", response.request)
         self.assertEqual(response.status_code, 400)
