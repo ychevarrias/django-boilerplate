@@ -25,6 +25,8 @@ jobs:
           POSTGRES_USER: userdb
           POSTGRES_PASSWORD: passworddb
           POSTGRES_DB: database
+        ports:
+          - 5432:5432
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
@@ -33,6 +35,8 @@ jobs:
           --health-retries 5
       redis:
         image: redis:6.2.12-alpine
+        ports:
+          - 6379:6379
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
