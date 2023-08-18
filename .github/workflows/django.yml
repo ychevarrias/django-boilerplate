@@ -7,11 +7,10 @@ on:
     branches: [ "main" ]
 
 env:
-  DAY_OF_WEEK: Monday
-  DATABASE_URL: psql://userdb:passworddb@127.0.0.1:5432/database
+  DATABASE_URL: "psql://userdb:passworddb@postgres:5432/database"
   ALLOWED_HOSTS: "*"
-  CACHE_URL: redis://redis:6379/1
-  CELERY_REDIS_URL: redis://redis:6379/2
+  CACHE_URL: "redis://redis:6379/1"
+  CELERY_REDIS_URL: "redis://redis:6379/2"
 
 jobs:
   build:
@@ -46,6 +45,7 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
+        cache: 'pip'
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
